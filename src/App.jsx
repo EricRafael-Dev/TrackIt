@@ -4,11 +4,12 @@ import SignIn from './pages/SignIn/SignIn';
 import Register from './pages/Register/Register';
 import Habits from './pages/Habits/Habits';
 import Historic from './pages/Historic/Historic';
+import Today from './pages/Today/Today'
 
 
 export default function App() {
 
-  const [screen1, setScreen1] = useState(true);
+  const [screen1, setScreen1] = useState(false);
   const [screen2, setScreen2] = useState(false);
 
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/cadastro" element={<Register />}></Route>
           <Route path="/habitos" element={<Habits screen1={screen1} setScreen1={setScreen1} screen2={screen2} setScreen2={setScreen2} />}></Route>
           <Route path="/historico" element={<Historic />}></Route>
+          <Route path="/hoje" element={<Today />}></Route>
           
         </Routes>
       </BrowserRouter>

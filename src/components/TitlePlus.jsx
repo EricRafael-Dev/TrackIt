@@ -4,10 +4,11 @@ export default function TitlePlus(props) {
 
     const { title, 
         onClick, 
-        display } = props;
+        display, 
+        margin } = props;
 
     return (
-        <Body display={display}>
+        <Body display={display} margin={margin}>
 
             <h1>{title}</h1>
 
@@ -25,13 +26,13 @@ const Body = styled.div`
     margin-top:98px;
     padding-left:17px;
     padding-right:17px;
-    margin-bottom: 28px;
+    margin-bottom: ${props => props.margin};
     background-color:#F2F2F2;
     
     h1{
         color:#126BA5;
         height: 29px;
-        width: 148px;
+        width: auto;
         font-family: Lexend Deca;
         font-size: 23px;
         font-weight: 400;

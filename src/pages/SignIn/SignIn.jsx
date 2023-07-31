@@ -1,20 +1,26 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import styled from "styled-components"
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect } from "react";
+import { LoginContext } from "../../context/LoginContext";
+import logo from '../../assets/logo.svg'
 
 export default function SignIn() {
 
     const navigate = useNavigate();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [sended, setSended] = useState(false);
 
+    const {login, setLogin} = useContext(LoginContext);
+    console.log(login);
+
     useEffect(() => {
         if (sended) {
-          const timer = setTimeout(() => {navigate("/habitos");}, 1000);
+          const timer = setTimeout(() => {navigate("/hoje");}, 1000);
           
           return () => clearTimeout(timer);
         }
@@ -32,9 +38,9 @@ export default function SignIn() {
         const url = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login";
 
         axios.post(url, obj)
-        .then(resposta => {
+        .then(response => {
             setSended(true);
-            console.log(resposta.data);})
+            setLogin(response.data);})
         .catch(erro => {
             setSended(false);
             alert('Usuário e/ou password inválidos!');
@@ -44,7 +50,7 @@ export default function SignIn() {
     return (
         <PageContainer>
 
-            <Logo>TrackIt</Logo>
+            <Image src={logo}></Image>
 
             <form onSubmit={enviarInfos}>
                 <FormContainer isDisabled={sended}>
@@ -77,16 +83,12 @@ const PageContainer = styled.div`
     text-align: center;
     margin-top: 68px;
 `
-const Logo = styled.h1`
-    font-family: Playball;
-    font-size: 69px;
-    font-weight: 400;
-    line-height: 86px;
-    letter-spacing: 0em;
-    text-align: center;
-    color: #126BA5;
+const Image = styled.img`
+    height: 180px;
+    width: 180px;
     margin-bottom: 32.62px;
 `
+
 const FormContainer = styled.div`
     width: calc(100vw - 40px); 
     display: flex;

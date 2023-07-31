@@ -3,9 +3,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './css/reset.css';
 import './css/style.css';
+import { LoginProvider } from './context/LoginContext.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+
+    <LoginProvider>
+      <App />
+    </LoginProvider>
+
   </React.StrictMode>,
 )

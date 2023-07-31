@@ -9,7 +9,7 @@ export default function Historic() {
         <>
             <Header />
 
-            <TitlePlus title={"Histórico"} display={"none"} />
+            <TitlePlus title={"Histórico"} display={"none"} margin={"28px"} />
 
             <Container>
                 <RegisterHistoric>Em breve você poderá ver o histórico dos seus hábitos aqui!</RegisterHistoric>

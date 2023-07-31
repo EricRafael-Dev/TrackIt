@@ -3,8 +3,14 @@ import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from "react-loader-spinner";
 import { useEffect } from "react";
+import { useContext } from 'react';
+import { LoginContext } from '../context/LoginContext';
+import axios from 'axios';
 
 export default function CadastrarNovoHabito(props) {
+
+    const { login, todayHabits, setTodayHabits } = useContext(LoginContext);
+    const token = login.token;
 
     const navigate = useNavigate();
 
@@ -13,13 +19,51 @@ export default function CadastrarNovoHabito(props) {
         screen2, 
         setScreen2 } = props
 
+    const [selectDays, 
+        setSelectDays] = useState([]);
+
+    const [send, 
+        setSend] = useState(false);
+
+    const [createNewHabit, 
+        setCreateNewHabit] = useState('');
+
     const days = ["D", "S", "T", "Q", "Q", "S", "S"];
 
-    const [selectDays, setSelectDays] = useState([]);
-    const [send, setSend] = useState(false);
+    function sendInfos(e) {
 
-    function sendInfos() {
-        setSend(true);
+        e.preventDefault();
+
+        const body = {
+            name: createNewHabit,
+            days: selectDays
+        }
+        console.log(body);
+
+        const config = {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        }
+
+        console.log(config);
+        
+        const link = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
+
+        axios.post(link,body,config)
+        .then(response => {
+            setSend(true);
+            alert('Habito cadastrado com sucesso!')
+            setTodayHabits([...todayHabits, response.data]);
+            setScreen2(false);
+            setScreen1(true);
+            console.log(response.data);
+        })
+        .catch(erro => {
+            setSend(false);
+            console.log(erro);
+            alert(erro);
+        });
     }
 
 
@@ -60,7 +104,7 @@ export default function CadastrarNovoHabito(props) {
 
             <ContainerAddHabits disabled={send}>
 
-                <input disabled={send} type="text" placeholder="Nome do hábito" />
+                <input disabled={send} type="text" placeholder="Nome do hábito" id="habit" value={createNewHabit} onChange={(e) => setCreateNewHabit(e.target.value)}/>
 
                 <Containerdays>
 
