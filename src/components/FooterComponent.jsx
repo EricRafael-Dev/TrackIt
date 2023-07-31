@@ -2,25 +2,27 @@ import styled from 'styled-components';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { LoginContext } from '../context/LoginContext';
 
 export default function FooterComponent() {
 
-    const progress = 75;
+    const { percent } = useContext(LoginContext);
 
     return (
-        <Footer>
+        <Footer data-test="menu">
             <FooterConteiner>
                 <NavFooter>
 
-                    <Link to="/habitos">
+                    <Link to="/habitos" data-test="habit-link">
                         <h1>Hábitos</h1>
                     </Link>
                     
-                    <Link to='/hoje'>
+                    <Link to='/hoje' data-test="today-link">
 
                         <div>
                             <CircularProgressbar
-                                value={progress}
+                                value={percent}
                                 text={`Hoje`}
                                 strokeWidth={10}
                                 styles={{
@@ -47,7 +49,7 @@ export default function FooterComponent() {
 
                     </Link>
 
-                    <Link to="/historico">
+                    <Link to="/historico" data-test="history-link">
                         <h1>Histórico</h1>
                     </Link>
 

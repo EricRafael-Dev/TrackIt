@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Header from "../../components/Header";
 import FooterComponent from "../../components/FooterComponent";
-import CadastrarNovoHabito from "../../components/RegisterNewHabit";
+import RegisterNewHabit from "../../components/RegisterNewHabit";
 import DontHvHabits from "../../components/DontHvHabits";
 import TitlePlus from "../../components/TitlePlus";
 import { useEffect } from "react";
@@ -33,7 +33,6 @@ export default function Habits(props) {
             axios.get(url, config)
             .then((response) => {
                 setHabitList(response.data);
-                console.log(response.data, "lista");
                 setScreen1(true);
             })
             .catch((erro) => {
@@ -59,9 +58,16 @@ export default function Habits(props) {
                 
                 {screen1 && habitList.length > 0 && (<RenderingHabits />)}
 
+                {screen2 && habitList.length === 0 && (
+                    <>
+                        <RegisterNewHabit setScreen1={setScreen1} screen2={screen2} setScreen2={setScreen2} />
+                        <DontHvHabits />
+                    </>
+                )}
+
                 {screen2 && habitList.length > 0 && (
                     <>
-                        <CadastrarNovoHabito setScreen1={setScreen1} screen2={screen2} setScreen2={setScreen2} />
+                        <RegisterNewHabit setScreen1={setScreen1} screen2={screen2} setScreen2={setScreen2} />
                         <RenderingHabits />
                     </>
                 )}

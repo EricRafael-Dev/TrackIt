@@ -6,13 +6,15 @@ export default function TitlePlus(props) {
         onClick, 
         display, 
         margin } = props;
+    
+    
 
     return (
         <Body display={display} margin={margin}>
 
             <h1>{title}</h1>
 
-            <div onClick={onClick}>+</div>
+            <button data-test="habit-create-btn" onClick={onClick}>+</button>
 
         </Body>
     )
@@ -40,7 +42,7 @@ const Body = styled.div`
         letter-spacing: 0em;
         text-align: left;
     }
-    div{
+    button{
         height: 35px;
         width: 40px;
         border-radius: 4.64px;
@@ -49,10 +51,11 @@ const Body = styled.div`
         font-family: Lexend Deca;
         font-size: 27px;
         font-weight: 400;
-        line-height: 34px;
         letter-spacing: 0em;
-        text-align: center;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         display: ${props => props.display};
+        border: none
     }
 `

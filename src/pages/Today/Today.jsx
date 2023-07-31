@@ -12,7 +12,7 @@ import 'dayjs/locale/pt-br';
 
 export default function Today() {
 
-    const { login, TodayHabits, setTodayHabits } = useContext(LoginContext);
+    const { login, todayHabits, setTodayHabits, percent } = useContext(LoginContext);
     const token = login.token;
 
     dayjs.locale('pt-br');
@@ -21,6 +21,7 @@ export default function Today() {
     const rest = weekDays.slice(1);
     const dailyWeek = firstChacter + rest;
     const date = dayjs().format('DD/MM');
+
 
     useEffect(() => {
 
@@ -35,7 +36,6 @@ export default function Today() {
         axios.get(url, config)
         .then((resposta) => {
             setTodayHabits(resposta.data);
-            console.log(resposta.data, "lista");
             
         })
         .catch((erro) => {
@@ -49,12 +49,20 @@ export default function Today() {
 
             <Header />
 
-            <TitlePlus titulo={
-                dailyWeek + ", " + date} display={"none"} margin={"0px"} />
+            <TitlePlus data-test="today" title={dailyWeek + ", " + date} display={"none"} margin={"0px"} />
 
             <Central>
 
-                <FinishedHabits>Nenhum hábito concluído ainda</FinishedHabits>
+                {percent === 0 && (
+
+                    <FinishedHabits data-test="today-counter">Nenhum hábito concluído ainda</FinishedHabits>
+
+                )}
+                {percent > 0 && (
+
+                    <FinishedHabits2 data-test="today-counter">{percent}% dos hábitos concluídos</FinishedHabits2>
+
+                )}
 
                 <TodayHabit />
 
@@ -77,6 +85,17 @@ const FinishedHabits = styled.div`
     letter-spacing: 0em;
     text-align: left;
     color: #BABABA;
+`
+const FinishedHabits2 = styled.div`
+    width: calc(100vw - 34px);
+    height: 22px;
+    font-family: Lexend Deca;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 22px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: #8FC549;
 `
 const Central = styled.div`
     display: flex;

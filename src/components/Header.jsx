@@ -8,7 +8,7 @@ export default function Header() {
     const image = login.image;
 
     return (
-        <PageContainerTopo>
+        <PageContainerTopo data-test="header">
 
             <PageContainer>
 

@@ -11,7 +11,7 @@ export default function RenderingHabits() {
     const { login, habitList, setHabitList } = useContext(LoginContext);
     const token = login.token;
 
-    function deletar(id) {
+    function del(id) {
         const habitId = id;
         const authToken = token;
 
@@ -24,7 +24,6 @@ export default function RenderingHabits() {
                     }
                 })
                 .then(response => {
-                    console.log('Hábito excluído com sucesso!');
                     const updatedHabits = habitList.filter(habit => habit.id !== habitId);
                     setHabitList(updatedHabits);
                 })
@@ -39,26 +38,24 @@ export default function RenderingHabits() {
             <ListContainer>
                 {habitList.map((habit) => (
 
-                    <HabitContainer key={habit.id}>
+                    <HabitContainer data-test="habit-container" key={habit.id}>
 
-                        <TituloeDelete>
+                        <Title>
 
-                            <h1>{habit.name}</h1>
+                            <h1 data-test="habit-name">{habit.name}</h1>
 
-                            <ion-icon onClick={() => deletar(habit.id)} name="trash-outline"></ion-icon>
+                            <ion-icon data-test="habit-delete-btn" onClick={() => del(habit.id)} name="trash-outline"></ion-icon>
 
-                        </TituloeDelete>
+                        </Title>
 
                         <Containerdays>
 
                             {days.map((day, index) => (
 
                                 <EachDay
-
+                                    data-test="habit-day"
                                     key={index}
-
                                     id={index}
-
                                     array={habit.days}
 
                                 >{day}</EachDay>
@@ -96,7 +93,7 @@ export default function RenderingHabits() {
     align-items:center;
     margin-bottom: 10px;
 `
-    const TituloeDelete = styled.div`
+    const Title = styled.div`
     height: 25px;
     width: calc(100vw - 64px);
     border-radius: 5px;

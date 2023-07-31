@@ -2,14 +2,13 @@ import styled from 'styled-components';
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ThreeDots } from "react-loader-spinner";
-import { useEffect } from "react";
 import { useContext } from 'react';
 import { LoginContext } from '../context/LoginContext';
 import axios from 'axios';
 
-export default function CadastrarNovoHabito(props) {
+export default function RegisterNewHabit(props) {
 
-    const { login, todayHabits, setTodayHabits } = useContext(LoginContext);
+    const { login, todayHabits, setTodayHabits, habitList, setHabitList } = useContext(LoginContext);
     const token = login.token;
 
     const navigate = useNavigate();
@@ -34,11 +33,12 @@ export default function CadastrarNovoHabito(props) {
 
         e.preventDefault();
 
+        setSend(true);
+
         const body = {
             name: createNewHabit,
             days: selectDays
         }
-        console.log(body);
 
         const config = {
             headers: {
@@ -46,15 +46,14 @@ export default function CadastrarNovoHabito(props) {
             }
         }
 
-        console.log(config);
         
         const link = "https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits";
 
         axios.post(link,body,config)
         .then(response => {
-            setSend(true);
-            alert('Habito cadastrado com sucesso!')
+            
             setTodayHabits([...todayHabits, response.data]);
+            setHabitList([...habitList, response.data])
             setScreen2(false);
             setScreen1(true);
             console.log(response.data);
@@ -81,7 +80,6 @@ export default function CadastrarNovoHabito(props) {
 
             setSelectDays([...selectDays, index]);
 
-            console.log([...selectDays, index])
 
         } else {
             let newDays = [];
@@ -102,15 +100,16 @@ export default function CadastrarNovoHabito(props) {
 
     return (
 
-            <ContainerAddHabits disabled={send}>
+            <ContainerAddHabits data-test="habit-create-container" disabled={send}>
 
-                <input disabled={send} type="text" placeholder="Nome do hábito" id="habit" value={createNewHabit} onChange={(e) => setCreateNewHabit(e.target.value)}/>
+                <input data-test="habit-name-input" disabled={send} type="text" placeholder="Nome do hábito" id="habit" value={createNewHabit} onChange={(e) => setCreateNewHabit(e.target.value)}/>
 
                 <Containerdays>
 
                     {days.map((day, index) => (
 
-                        <Each disabled={send}
+                        <Each data-test="habit-day"
+                            disabled={send}
                             key={index}
                             id={index}
                             array={selectDays}
@@ -125,14 +124,15 @@ export default function CadastrarNovoHabito(props) {
 
                 <ContainerButtons>
 
-                    <Button1 disabled={send} onClick={() => {
+                    <Button1 data-test="habit-create-cancel-btn"
+                        disabled={send} onClick={() => {
                         setScreen1(true);
                         setScreen2(false);
                         }}>
                         Cancelar
                     </Button1>
 
-                    <Button2 disabled={send} onClick={sendInfos}>
+                    <Button2 data-test="habit-create-save-btn" disabled={send} onClick={sendInfos}>
                         {send ? (<ThreeDots color="#FFFFFF" height={20} width={20} />) : ("Salvar")}
                     </Button2>
 

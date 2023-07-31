@@ -55,20 +55,20 @@ export default function SignIn() {
             <form onSubmit={enviarInfos}>
                 <FormContainer isDisabled={sended}>
 
-                    <input type="email" disabled={sended} placeholder="email" id="email" value={email} 
+                    <input data-test="email-input" type="email" disabled={sended} placeholder="email" id="email" value={email} 
                     onChange={(e) => setEmail(e.target.value)} required/>
 
-                    <input type="password" disabled={sended} placeholder="password" id="password" value={password} 
+                    <input data-test="password-input" type="password" disabled={sended} placeholder="password" id="password" value={password} 
                     onChange={(e) => setPassword(e.target.value)} required/>
                     
-                    <button disabled={sended} type="submit">
+                    <button data-test="login-btn" disabled={sended} type="submit">
                         {sended ? (<ThreeDots color="#FFFFFF" height={20} width={20} />) : ("Entrar")}
                     </button>
 
                 </FormContainer>
             </form>
 
-            <Link to='/cadastro'>
+            <Link to='/cadastro' data-test="signup-link">
                 <Register>Não tem uma conta? Cadastre-se!</Register>
             </Link>
 

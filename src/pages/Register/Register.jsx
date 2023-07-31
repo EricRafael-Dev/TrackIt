@@ -54,12 +54,12 @@ export default function Register() {
 
                 <FormContainer isDisabled={sended}>
 
-                    <input type="email" disabled={sended} placeholder="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                    <input type="password" disabled={sended} placeholder="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                    <input type="text" disabled={sended} placeholder="nome" id="nome" value={name} onChange={(e) => setName(e.target.value)} required />
-                    <input type="url" disabled={sended} placeholder="foto" id="foto" value={url} onChange={(e) => setUrl(e.target.value)} required />
+                    <input data-test="email-input" type="email" disabled={sended} placeholder="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input data-test="password-input" type="password" disabled={sended} placeholder="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input data-test="user-name-input" type="text" disabled={sended} placeholder="nome" id="nome" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <input data-test="user-image-input" type="url" disabled={sended} placeholder="foto" id="foto" value={url} onChange={(e) => setUrl(e.target.value)} required />
 
-                    <button type="submit" disabled={sended}>
+                    <button data-test="signup-btn" type="submit" disabled={sended}>
                         {sended ? (<ThreeDots color="#FFFFFF" height={20} width={20} />) : ("Cadastrar")}
                     </button>
 
@@ -67,7 +67,7 @@ export default function Register() {
 
             </form>
 
-            <Link to='/'>
+            <Link to='/' data-test="login-link">
                 <SignIn>Já tem uma conta? Faça login!</SignIn>
             </Link>
 
